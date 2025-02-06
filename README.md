@@ -1,6 +1,6 @@
 # Response of Dissolved Inorganic Carbon in the North Atlantic Ocean to the North Atlantic Oscillation
 
-The repository contains scripts for analysing the changes in temperatures, dissolved ingorganic carbon (DIC) and nutrient concentrations in the North Atlantic Ocean due to a single North Atlantic Oscillation (NAO) event. The ocean response is decomposed into fast and slow responses. Furthermore, tracer budget and transport diagnostics are analysed to identify the dominant processes driving changes in temperatures and tracer concentrations.     
+The repository contains scripts for analysing the changes in temperatures, dissolved ingorganic carbon (DIC) and nutrient concentrations in the North Atlantic Ocean due to a single North Atlantic Oscillation (NAO) event, see [Khatri and Williams (2025)](https://doi.org/10.22541/essoar.173884326.61031637/v1). The ocean response is decomposed into fast and slow responses. Furthermore, tracer budget and transport diagnostics are analysed to identify the dominant processes driving changes in temperatures and tracer concentrations.     
 
 Python scripts for computing diagnsotics are in [Python-Scripts](./Python-Scripts) and plotting notebooks are in [Plots](./Plots). Below is a short description of different scripts.
 
