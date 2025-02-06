@@ -2,7 +2,7 @@
 
 The repository contains scripts for analysing the changes in temperatures, dissolved ingorganic carbon (DIC) and nutrient concentrations in the North Atlantic Ocean due to a single North Atlantic Oscillation (NAO) event, see [Khatri and Williams (2025)](https://doi.org/10.22541/essoar.173884326.61031637/v1). The ocean response is decomposed into fast and slow responses. Furthermore, tracer budget and transport diagnostics are analysed to identify the dominant processes driving changes in temperatures and tracer concentrations.     
 
-Python scripts for computing diagnsotics are in [Python-Scripts](./Python-Scripts) and plotting notebooks are in [Plots](./Plots). Below is a short description of different scripts.
+Python scripts for computing diagnsotics are in [Python-Scripts](./Python-Scripts) and plotting notebooks are in [Plots](./Plots). Post-processed data required for creating figures can be downloaded from [doi.org/10.5281/zenodo.14789908](https://doi.org/10.5281/zenodo.14789908). Below is a short description of python scripts.
 
 | Script Name Structure | Content |
 | --- | --- | 
