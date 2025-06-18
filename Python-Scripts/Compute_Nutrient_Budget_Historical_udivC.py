@@ -228,53 +228,7 @@ for exp in experiment_id:
                 ds_save = xr.Dataset()
                 ds_save['dz'] = (ds_var['lev_bounds'].isel(time=0,bnds=1) 
                                  - ds_var['lev_bounds'].isel(time=0,bnds=0)).drop('time')
-
-                """
-                # 1. Subpolar North Atlantic
-                dA = cell_area.where((ds['lat']>=45.) & (ds['lat']<=60.) & (ds['lon']>=310.) & (ds['lon']<=340.))
-                for save_var in save_var_list:
-                    var_area_int = area_sum(ds[save_var], dA = dA, x='x', y='y')
-                    ds_save[save_var + '_North_Atlantic_Subpolar'] = var_area_int.compute()#.persist()
-                    ds_save[save_var + '_North_Atlantic_Subpolar'].attrs['long_name'] = ("Subpolar North Atlantic " + save_var + 
-                                                                                        " (45N-60N, 50W-20W) area-integrated")
-                    
-                # 2. Mid-lat North Atlantic
-                dA = cell_area.where((ds['lat']>=25.) & (ds['lat']<=45.) & (ds['lon']>=300.) & (ds['lon']<=330.))
-                for save_var in save_var_list:
-                    var_area_int = area_sum(ds[save_var], dA = dA, x='x', y='y')
-                    ds_save[save_var + '_North_Atlantic_Midlat'] = var_area_int.compute()#.persist()
-                    ds_save[save_var + '_North_Atlantic_Midlat'].attrs['long_name'] = ("Mid-lat North Atlantic " + save_var + 
-                                                                                      " (25N-45N, 60W-30W) area-integrated")
-                    
-                # 3. Sub-Tropical North Atlantic
-                dA = cell_area.where((ds['lat']>=10.) & (ds['lat']<=25.) & (ds['lon']>=310.) & (ds['lon']<=340.))
-                for save_var in save_var_list:
-                    var_area_int = area_sum(ds[save_var], dA = dA, x='x', y='y')
-                    ds_save[save_var + '_North_Atlantic_Subtropical'] = var_area_int.compute()#.persist()
-                    ds_save[save_var + '_North_Atlantic_Subtropical'].attrs['long_name'] = ("Subtropical North Atlantic " + save_var + 
-                                                                                       " (10N-25N, 50W-20W) area-integrated")
-                """
-
-                """
-                # Below with changes in regional boxes
-                # 1. Subpolar North Atlantic
-                dA = cell_area.where((ds['lat']>=50.) & (ds['lat']<=60.) & (ds['lon']>=320.) & (ds['lon']<=340.))
-                for save_var in save_var_list:
-                    var_area_int = area_sum(ds[save_var], dA = dA, x='x', y='y')
-                    ds_save[save_var + '_North_Atlantic_Subpolar'] = var_area_int.compute()#.persist()
-                    ds_save[save_var + '_North_Atlantic_Subpolar'].attrs['long_name'] = ("Subpolar North Atlantic " + save_var + 
-                                                                                        " (50N-60N, 40W-20W) area-integrated")
-                    
-                # 2. Subtropical North Atlantic
-                dA = cell_area.where((ds['lat']>=15.) & (ds['lat']<=45.) & (ds['lon']>=305.) & (ds['lon']<=335.))
-                for save_var in save_var_list:
-                    var_area_int = area_sum(ds[save_var], dA = dA, x='x', y='y')
-                    ds_save[save_var + '_North_Atlantic_Subtropical'] = var_area_int.compute()#.persist()
-                    ds_save[save_var + '_North_Atlantic_Subtropical'].attrs['long_name'] = ("Subtropical North Atlantic " + save_var + 
-                                                                                      " (15N-45N, 55W-25W) area-integrated")
-                """
                 
-                # Below with changes in regional boxes (chosen based on extent of temperature and DIC anomalies due to NAO)
                 # 1. Subpolar North Atlantic
                 dA = cell_area.where((ds['lat']>=48.) & (ds['lat']<=65.) & (ds['lon']>=295.) & (ds['lon']<=340.))
                 for save_var in save_var_list:
@@ -300,10 +254,6 @@ for exp in experiment_id:
                     # If it doesn't exist, create it
                     os.makedirs(directory)
                 
-                #save_file_path = (save_path + model + exp + "/" + dir_name + 
-                #                  "/Timeseries/" + var + "_Budget_2.nc")
-                #save_file_path = (save_path + model + exp + "/" + dir_name + 
-                #                  "/Timeseries/" + var + "_Budget_new_regions.nc")
                 save_file_path = (save_path + model + exp + "/" + dir_name + 
                                   "/Timeseries/" + var + "_Budget_new_regions_2.nc")
                 

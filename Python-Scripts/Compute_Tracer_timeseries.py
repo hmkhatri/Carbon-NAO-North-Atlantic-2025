@@ -95,7 +95,6 @@ cmip_dir = "/badc/cmip6/data/CMIP6/CMIP/MOHC/UKESM1-0-LL/"
 save_path = "/gws/nopw/j04/unicorns/carbon_add_redis/Fast_SLow_NAO/MOHC/UKESM1-0-LL/historical/"
 
 #var_list = ['dissic', 'mlotst']
-#var_list = ['o2', 'o2sat']
 #var_list = ['epc100', 'epp100', 'expc', 'no3']
 #var_list = ['epc100', 'epp100', 'expc', 'detoc', 'co3', 'phyc']
 var_list = ['epcalc100']
@@ -139,34 +138,6 @@ for dir1 in dir_list:
         #    ds_save['dz'] = (d1['lev_bounds'].isel(time=0,bnds=1) 
         #                    - d1['lev_bounds'].isel(time=0,bnds=0)).drop('time')
 
-        """
-        # 1. Subpolar North Atlantic
-        dA = cell_area.where((ds['lat']>=45.) & (ds['lat']<=60.) & (ds['lon']>=310.) & (ds['lon']<=340.))
-        var_area_int = area_sum(ds[var1], dA = dA, x='x', y='y')
-        if(var1 == 'mlotst'):
-            dA = dA.where((ds[var1].isel(time=0) > -1.e6) & (ds[var1].isel(time=0) < 1.e6)) # get proper land mask
-            ds_save[var1 + '_North_Atlantic_Subpolar'] = (var_area_int / dA.sum(['x', 'y'])).compute()
-        else:
-            ds_save[var1 + '_North_Atlantic_Subpolar'] = var_area_int.compute()
-        
-        # 2. Mid-lat North Atlantic
-        dA = cell_area.where((ds['lat']>=25.) & (ds['lat']<=45.) & (ds['lon']>=300.) & (ds['lon']<=330.))
-        var_area_int = area_sum(ds[var1], dA = dA, x='x', y='y')
-        if(var1 == 'mlotst'):
-            dA = dA.where((ds[var1].isel(time=0) > -1.e6) & (ds[var1].isel(time=0) < 1.e6)) # get proper land mask
-            ds_save[var1 + '_North_Atlantic_Midlat'] = (var_area_int / dA.sum(['x', 'y'])).compute()
-        else:
-            ds_save[var1 + '_North_Atlantic_Midlat'] = var_area_int.compute()
-        
-        # 3. Sub-Tropical North Atlantic
-        dA = cell_area.where((ds['lat']>=10.) & (ds['lat']<=25.) & (ds['lon']>=310.) & (ds['lon']<=340.))
-        var_area_int = area_sum(ds[var1], dA = dA, x='x', y='y')
-        if(var1 == 'mlotst'):
-            dA = dA.where((ds[var1].isel(time=0) > -1.e6) & (ds[var1].isel(time=0) < 1.e6)) # get proper land mask
-            ds_save[var1 + '_North_Atlantic_Subtropical'] = (var_area_int / dA.sum(['x', 'y'])).compute()
-        else:
-            ds_save[var1 + '_North_Atlantic_Subtropical'] = var_area_int.compute()
-        """
 
         # 1. Subpolar North Atlantic
         dA = cell_area.where((ds['lat']>=48.) & (ds['lat']<=65.) & (ds['lon']>=295.) & (ds['lon']<=340.))

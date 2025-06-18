@@ -1,7 +1,7 @@
 """
 This script can be used to create composites of budgets for DIC, tempearture, salt timeseries based on extreme NAO indices using cmip historical runs.
 The following steps are taken.  
-1. Long-term linear trend is removed from picontrol runs.
+1. Long-term linear trend is removed from historical runs.
 2. Variations at timescales longer than 30 years are removed.
 3. Composites are created based on NAO+ and NAO- events.
 """
@@ -87,16 +87,7 @@ for dir1 in dir_list:
     ds_MLD = xr.open_dataset(dir_path +  "/" + dir_name + "/Timeseries/mlotst.nc", use_cftime=True)
     
     for var1 in var_list:
-        # Earlier runs without decomposing into time-varying and time-mean contributions
-        #d1 = xr.open_dataset(dir_path +  "/" + dir_name + "/Timeseries/" + var1 + "_Budget.nc", use_cftime=True)
         
-        # New runs with decomposing into time-varying and time-mean contributions
-        #d1 = xr.open_dataset(dir_path +  "/" + dir_name + "/Timeseries/" + var1 + "_Budget_2.nc", use_cftime=True)
-        
-        #ds = xr.merge([d1.drop('dz'), ds_MLD.drop('time'),
-        #               ds_NAO.drop('time').isel(time=slice(0, len(d1['time'])))]) # get the same length in time
-
-        # New runs in newer regions with decomposing into time-varying and time-mean contributions
         d1 = xr.open_dataset(dir_path +  "/" + dir_name + "/Timeseries/" + var1 + "_Budget_new_regions_2.nc", use_cftime=True)
         
         ds = xr.merge([d1.drop('dz'), ds_MLD.drop('time'),
@@ -184,13 +175,6 @@ for dir1 in dir_list:
                 # If it doesn't exist, create it
                 os.makedirs(directory)
 
-            # Earlier runs without decomposing into time-varying and time-mean contributions
-            #ds_ens.to_netcdf(dir_path + "/" + dir_name + "/Composites/" + cas + "_Composite_" + var1 + "_Budget.nc")
-
-            # New runs with decomposing into time-varying and time-mean contributions
-            #ds_ens.to_netcdf(dir_path + "/" + dir_name + "/Composites/" + cas + "_Composite_" + var1 + "_Budget_2.nc")
-
-            # New runs in newer regions with decomposing into time-varying and time-mean contributions
             ds_ens.to_netcdf(dir_path + "/" + dir_name + "/Composites/" + cas + "_Composite_" + var1 + "_Budget_new_regions_2.nc")
             
             print("Composites data saved successfully for var: ", var1)

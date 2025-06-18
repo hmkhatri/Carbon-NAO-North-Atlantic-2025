@@ -81,20 +81,14 @@ for exp in experiment_id:
         ds_save['dz'] = dz
         
         # 1. Subpolar North Atlantic
-        dA = cell_volume.where((ds['lat']>=45.) & (ds['lat']<=60.) & (ds['lon']>=310.) & (ds['lon']<=340.)).compute()
+        dA = cell_volume.where((ds['lat']>=48.) & (ds['lat']<=65.) & (ds['lon']>=295.) & (ds['lon']<=340.)).compute()
         dV = area_sum(1., dA = dA, x='x', y='y')
         ds_save['Volume_North_Atlantic_Subpolar'] = dV
         ds_save['Volume_North_Atlantic_Subpolar'].attrs['units'] = 'm^3'
 
-        # 2. Mid-lat North Atlantic DIC
-        dA = cell_volume.where((ds['lat']>=25.) & (ds['lat']<=45.) & (ds['lon']>=300.) & (ds['lon']<=330.)).compute()
-        dV = area_sum(1., dA = dA, x='x', y='y')
 
-        ds_save['Volume_North_Atlantic_Midlat'] = dV
-        ds_save['Volume_North_Atlantic_Midlat'].attrs['units'] = 'm^3'
-
-        # 3. Sub-Tropical North Atlantic
-        dA = cell_volume.where((ds['lat']>=10.) & (ds['lat']<=25.) & (ds['lon']>=310.) & (ds['lon']<=340.)).compute()
+        # 2. Sub-Tropical North Atlantic
+        dA = cell_volume.where((ds['lat']>=25.) & (ds['lat']<=47.) & (ds['lon']>=280.) & (ds['lon']<=340.)).compute()
         dV = area_sum(1., dA = dA, x='x', y='y')
 
         ds_save['Volume_North_Atlantic_Subtropical'] = dV

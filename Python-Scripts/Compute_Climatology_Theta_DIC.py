@@ -1,5 +1,5 @@
 """
-The script is used for computing time-mean (1850-2014) profiles of temperatures and DIC, and theri meridional transports.
+The script is used for computing time-mean (1850-2014) profiles of temperatures and DIC, and their meridional transports.
 r2i1p1f2 historical simulation is used.
 """
 

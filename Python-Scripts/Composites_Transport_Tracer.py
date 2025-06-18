@@ -1,7 +1,7 @@
 """
-This script can be used to create composites of meridional tracer tansports and overturning based on extreme NAO indices using cmip piControl runs.
+This script can be used to create composites of meridional tracer tansports and overturning based on extreme NAO indices using cmip historical runs.
 The following steps are taken.  
-1. Long-term linear trend is removed from picontrol runs.
+1. Long-term linear trend is removed all historical ensemble members separately.
 2. Variations at timescales longer than 30 yeaars are removed.
 3. Composites are created based on NAO+ and NAO- events.
 """

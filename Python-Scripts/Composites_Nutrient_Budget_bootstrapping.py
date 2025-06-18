@@ -1,6 +1,6 @@
 """
 This script can be used to compute confidence intervals using boorstrapping method.
-The script is set up to compute confidence intervals for tracer budget terms in the North Atlnatic Ocean.
+The script is set up to compute confidence intervals for tracer budget terms in the North Atlantic Ocean.
 """
 
 # ------- load libraries ------------

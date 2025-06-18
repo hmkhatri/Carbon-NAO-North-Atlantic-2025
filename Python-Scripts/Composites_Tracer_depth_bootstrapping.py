@@ -71,9 +71,7 @@ ppdir = ("/gws/nopw/j04/unicorns/carbon_add_redis" +
          "/Fast_SLow_NAO/MOHC/UKESM1-0-LL/historical/")
 dir_list = glob.glob(ppdir + "r*")
 
-#var_list = ['thetao', 'dissic', 'so']
-var_list = ['dissic']
-#region_list = ['_North_Atlantic_Subpolar', '_North_Atlantic_Midlat', '_North_Atlantic_Subtropical']
+var_list = ['thetao', 'dissic', 'so']
 region_list = ['_North_Atlantic_Subpolar', '_North_Atlantic_Subtropical']
 
 num_sample = 1000

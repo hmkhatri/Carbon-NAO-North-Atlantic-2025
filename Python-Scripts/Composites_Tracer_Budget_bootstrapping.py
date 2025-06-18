@@ -1,6 +1,6 @@
 """
 This script can be used to compute confidence intervals using boorstrapping method.
-The script is set up to compute confidence intervals for tracer budget terms in the North Atlnatic Ocean.
+The script is set up to compute confidence intervals for tracer budget terms in the North Atlantic Ocean.
 """
 
 # ------- load libraries ------------
@@ -131,13 +131,6 @@ for depth in depth_levels:
             
             # combine nao+ and nao- data
             for cas in case:
-                # Earlier runs without decomposing into time-varying and time-mean contributions
-                #d1 = xr.open_dataset(ppdir + dir_name + "/Composites/" + cas + 
-                #                     "_Composite_" + var1 + "_Budget.nc")
-                
-                # New runs with decomposing into time-varying and time-mean contributions
-                #d1 = xr.open_dataset(ppdir + dir_name + "/Composites/" + cas + 
-                #                     "_Composite_" + var1 + "_Budget_2.nc")
 
                 # New runs in newer regions with decomposing into time-varying and time-mean contributions
                 d1 = xr.open_dataset(ppdir + dir_name + "/Composites/" + cas + 
@@ -183,13 +176,6 @@ for depth in depth_levels:
             for var in save_var_list:
                 if(var == flux_var):
                     tmp = ds1[var + region].isel(lev=0)
-                    
-                    #depth_ratio = depth_lev[1] / (ds1['mlotst' + region].groupby('time.month') 
-                    #                              + clim_MLD['mlotst' + region]).compute()
-                    #depth_ratio = xr.where(depth_ratio > 1., 1., depth_ratio) # set to 1 when chosen depth is deeper than MLD
-                    #depth_ratio = xr.where(depth_ratio < 0., 1., depth_ratio)
-                    # Air-flux is scaled by depth_ratio if budget is computed in layer shallower than MLD
-                    #tmp = (tmp * depth_ratio).compute()
                 else:
                     tmp = (ds1[var + region] * d1['dz']).sel(lev=slice(depth_lev[0],depth_lev[1])).sum('lev') * fac[k]
                     
@@ -199,14 +185,6 @@ for depth in depth_levels:
                 ds1[var + region] = Moving_Avg(tmp, time = ds1['time'], time_len = win_month)
 
             if(var1 == 'dissic'):
-                # compute preformed and regeneraged DIC concentrations.
-                # DIC = DIC(reg) + DIC(pre)
-                # DIC(reg) = (O2(sat) - O2) / 2.
-                AOU = ds1['o2sat' + region] * 1000. - ds1['o2' + region]
-                # o2sat cmip output diagnostics have conversion error, so multiplied by 1000 to account for the missing factor
-                reg_DIC = ((AOU / 2.) * d1['dz']).sel(lev=slice(depth_lev[0],depth_lev[1])).sum('lev') * fac[k]
-                ds1[var1 + '_bio_reg' + region] = Data_time_tendency(- reg_DIC, ds1['time'], win_month)
-                #ds1['dt_' + var1 + '_pre' + region] = ds1['dt_' + var1 + region] - ds1['dt_' + var1 + '_reg' + region]
                 
                 particulate_flux = - ds1['expc' + region].sel(lev = depth_lev[1], method = 'nearest') * fac[k]
                 ds1['particulate_flux' + region] = Moving_Avg(particulate_flux, time = ds1['time'], time_len = win_month)
@@ -237,28 +215,10 @@ for depth in depth_levels:
                                                      ds1[flux_var + region])
             
             if(var1 == 'dissic'):
-                #ds1[var1 + '_res_hor_div' + region] = ds1[var1 + '_res_hor_div' + region] - ds1['dt_' + var1 + '_reg' + region]
                 ds1 = ds1.drop(['o2sat' + region, 'o2' + region, 'expc' + region])
                 ds1[var1 + '_res_bio' + region] = ds1[var1 + '_res' + region] - ds1['particulate_flux' + region] # residual term
                 ds1[var1 + '_vert_flx_conv' + region] = (ds1[var1 + '_res_bio' + region] + 
                                                          ds1[flux_var + region])
-            
-            """
-            ds1[var1 + '_hor_div' + region] = (- ds1[var1 + '_div_x' + region] - ds1[var1 + '_div_y' + region]
-                                               + ds1[var1 + '_u_div_x' + region] + ds1[var1 + '_u_div_y' + region]) 
-            ds1[var1 + '_ver_div' + region] = (ds1[var1 + '_div_z' + region] - ds1[var1 + '_u_div_z' + region])
-            
-            ds1[var1 + '_res_hor_div' + region] = (ds1['dt_' + var1 + region] - ds1[var1 + '_ver_div' + region] 
-                                                   - ds1[flux_var + region]) # horizontal convergence as residual term
-            
-            # if 3D divergence correction included in horizontal term
-            ds1[var1 + '_hor_div_2' + region] = (- ds1[var1 + '_div_x' + region] - ds1[var1 + '_div_y' + region]
-                                                     + ds1[var1 + '_u_div_x' + region] + ds1[var1 + '_u_div_y' + region] 
-                                                     - ds1[var1 + '_u_div_z' + region]) 
-            ds1[var1 + '_ver_div_2' + region] = (ds1[var1 + '_div_z' + region])
-            ds1[var1 + '_res_hor_div_2' + region] = (ds1['dt_' + var1 + region] - ds1[var1 + '_ver_div_2' + region] 
-                                                   - ds1[flux_var + region]) # horizontal convergence as residual term
-            """
         
         # Bootstrapping analysis
         ds_save = xr.Dataset()
@@ -284,14 +244,6 @@ for depth in depth_levels:
         ds_save.attrs['description'] = ("Bootstrapping standard errors and confidence intervals are at " +
                                         str(cf_lev*100) + "%. ")
         
-        # Earlier runs without decomposing into time-varying and time-mean contributions
-        #save_file_path = (ppdir + "all_ensembles/Timeseries/" + var1 + "_Budget_depth_" 
-        #                  + str(int(depth_lev[1])) + ".nc")
-        
-        # New runs with decomposing into time-varying and time-mean contributions
-        #save_file_path = (ppdir + "all_ensembles/Timeseries/" + var1 + "_Budget_2_depth_" 
-        #                  + str(int(depth_lev[1])) + ".nc")
-
         # New runs in newer regions with decomposing into time-varying and time-mean contributions
         save_file_path = (ppdir + "all_ensembles/Timeseries/" + var1 + "_Budget_new_regions_2_depth_" 
                           + str(int(depth_lev[1])) + ".nc")
